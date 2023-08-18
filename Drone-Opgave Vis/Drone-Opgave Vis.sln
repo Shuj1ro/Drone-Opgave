@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drone-Opgave Vis", "Drone-Opgave Vis\Drone-Opgave Vis.csproj", "{0AB2F0C4-50A7-4DFC-96FF-800D103708ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0AB2F0C4-50A7-4DFC-96FF-800D103708ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AB2F0C4-50A7-4DFC-96FF-800D103708ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AB2F0C4-50A7-4DFC-96FF-800D103708ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AB2F0C4-50A7-4DFC-96FF-800D103708ED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {19ED7432-D8E4-4A11-A291-00C5105611FE}
+	EndGlobalSection
+EndGlobal
