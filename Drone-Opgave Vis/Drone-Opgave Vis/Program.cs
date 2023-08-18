@@ -6,7 +6,21 @@
         static void Main(string[] args)
         {
             string theShit = File.ReadAllText("flyvning1.csv");
-                Console.WriteLine(theShit);
+
+            String[] spearator = {";"};
+            Int32 count = int.MaxValue;
+
+            // using the method
+            String[] strlist = theShit.Split(spearator, count,
+                   StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (String s in strlist)
+            {
+                Console.WriteLine(s);
+            }
+
+           
+
         }
     }
 }
