@@ -1,52 +1,81 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.IO;
+using System.ComponentModel.DataAnnotations;
 
-class Program
+namespace DronerOpgave
 {
-    static void Main()
+    internal class Program
     {
-        string inputFilePath = "flyvning1.csv";
-        string outputFilePath = "new_GPT.csv";
 
-        try
+        static void Main(string[] args)
         {
-            using (StreamReader reader = new StreamReader(inputFilePath))
-            using (StreamWriter writer = new StreamWriter(outputFilePath))
+            File.Delete("doneText.csv");
+            string theText = File.ReadAllText("flyvning1.csv");
+
+            String[] spearator = { ";", "\n" };
+            Int32 count = int.MaxValue;
+
+            // Teksten bliver splittet
+            String[] strlist = theText.Split(spearator, count,
+                   StringSplitOptions.RemoveEmptyEntries);
+
+            // Teksten bliver læst
+            for (int i = 0; i < strlist.Length; i++)
             {
-                // Read and write the header line
-                string headerLine = reader.ReadLine();
-                writer.WriteLine(headerLine);
-
-                while (!reader.EndOfStream)
-                {
-                    string dataLine = reader.ReadLine();
-
-                    // Split fields
-                    string[] fields = dataLine.Split(';');
-                    string gpsLong = fields[3]; // Assuming GPSLong is at index 3
-                    string gpsLat = fields[4];  // Assuming GPSLat is at index 4
-
-                    // Correct GPS values
-                    double correctedLong = double.Parse(gpsLong) / 10000000.0;
-                    double correctedLat = double.Parse(gpsLat) / 10000000.0;
-
-                    fields[3] = correctedLong.ToString();
-                    fields[4] = correctedLat.ToString();
-
-                    // Add GPS coordinates column
-                    string gpsCoordinates = correctedLong.ToString() + ", " + correctedLat.ToString();
-                    dataLine = string.Join(";", fields) + ";" + gpsCoordinates;
-
-                    // Write the modified line to the new file
-                    writer.WriteLine(dataLine);
-                }
+                File.AppendAllText("doneText.csv", strlist[i] + "\n");
             }
 
-            Console.WriteLine("Data processing completed successfully.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("An error occurred: " + ex.Message);
+            // Longittude data læsning
+            List<string> longtitudeData = new List<string>();
+            for (int i = 17; i < strlist.Length; i++)
+            {
+                string brokenLongData = strlist[i];
+                // Console.WriteLine("long data " + i + ":" + brokenLongData);
+                longtitudeData.Add(brokenLongData);
+                i = (i + 12);
+            }
+
+
+            // Latitude data læsning 
+            List<string> latitudeData = new List<string>();
+            for (int i = 18; i < strlist.Length; i++)
+            {
+                string brokenLatData = strlist[i];
+                // Console.WriteLine("lat data " + i + ":" + brokenLatData);
+                latitudeData.Add(brokenLatData);
+                i = (i + 12);
+            }
+
+            // Longtitude data Rettelse
+            for (int i = 0; i < longtitudeData.Count; i++)
+            {
+                longtitudeData[i] = longtitudeData[i].Replace(".", "");
+                longtitudeData[i] = longtitudeData[i].Insert(1, ".");
+                //Console.WriteLine("Rettede Long Data #" + i + ": " + longtitudeData[i]);
+            }
+
+            // Latitude data Rettelse
+            for (int i = 0; i < latitudeData.Count; i++)
+            {
+                latitudeData[i] = latitudeData[i].Replace(".", "");
+                latitudeData[i] = latitudeData[i].Insert(2, ".");
+                //Console.WriteLine("Rettede Lat Data #" + i + ": " + latitudeData[i]);
+            }
+
+
+
+            //samle dit data
+
+            List<string> samledeData = new List<string>();
+            for (int i = 0; i < samledeData.Count; i++)
+            {
+                samledeData.Add("(" + longtitudeData[i] + ";" + latitudeData[i] + ")");
+                Console.WriteLine(samledeData[i]);
+            }
         }
     }
 }
