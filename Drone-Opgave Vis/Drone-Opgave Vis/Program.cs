@@ -13,7 +13,7 @@ namespace DronerOpgave
 
         static void Main(string[] args)
         {
-            File.Delete("doneText.csv");
+            File.Delete("shadowFlyvning1");
             string theText = File.ReadAllText("flyvning1.csv");
 
             String[] spearator = { ";", "\n" };
@@ -22,12 +22,6 @@ namespace DronerOpgave
             // Teksten bliver splittet
             String[] strlist = theText.Split(spearator, count,
                    StringSplitOptions.RemoveEmptyEntries);
-
-            // Teksten bliver læst
-            for (int i = 0; i < strlist.Length; i++)
-            {
-                File.AppendAllText("doneText.csv", strlist[i] + "\n");
-            }
 
             // Longittude data læsning
             List<string> longtitudeData = new List<string>();
@@ -38,7 +32,6 @@ namespace DronerOpgave
                 longtitudeData.Add(brokenLongData);
                 i = (i + 12);
             }
-
 
             // Latitude data læsning 
             List<string> latitudeData = new List<string>();
@@ -67,14 +60,31 @@ namespace DronerOpgave
             }
 
 
-
             //samle dit data
 
             List<string> samledeData = new List<string>();
-            for (int i = 0; i < samledeData.Count; i++)
+            for (int i = 0; i < longtitudeData.Count; i++)
             {
-                samledeData.Add("(" + longtitudeData[i] + ";" + latitudeData[i] + ")");
-                Console.WriteLine(samledeData[i]);
+                //VIGTIGT FIX HER MAYBE 
+                string samlet = ";(" + longtitudeData[i] + ";" + latitudeData[i] + ")";
+
+                samledeData.Add(samlet);
+                //Console.WriteLine(samledeData[i]);
+            }
+
+            String[] seperator2 = {"\r" };
+            String[] strlist2 = theText.Split(seperator2, count,
+                StringSplitOptions.RemoveEmptyEntries);
+
+            strlist2[0] += ";GPSKoord";
+
+            for(int i = 2; i < longtitudeData.Count; i++)
+            {
+                int j = 0;
+                strlist2[i] += samledeData[j];
+                File.AppendAllText("shadowFlyvning1.csv" , strlist2[i]);
+                j++;
+
             }
         }
     }
