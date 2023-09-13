@@ -13,21 +13,21 @@ namespace DronerOpgave
 
         static void Main(string[] args)
         {
-            File.Delete("ShadowFlyvning2.csv");
+            File.Delete("ShadowFlyvning1.csv");
             string theText = File.ReadAllText("flyvning1.csv");
 
-            String[] spearator = { ";", "\n", "\r" };
+            String[] seperator = { ";", "\n", "\r" };
             Int32 count = int.MaxValue;
 
             // Teksten bliver splittet
-            String[] strlist = theText.Split(spearator, count,
+            String[] strlist = theText.Split(seperator, count,
                    StringSplitOptions.RemoveEmptyEntries);
 
-            // Longittude data læsning
+            // Longtittude data læsning
             List<string> longtitudeData = new List<string>();
             for (int i = 16; i < strlist.Length; i++)
             {
-                // Console.WriteLine("long data " + i + ":" + brokenLongData);
+            
                 strlist[i] = strlist[i].Replace(".", "");
                 strlist[i] = strlist[i].Insert(1, ".");
                 longtitudeData.Add(strlist[i]);
@@ -39,7 +39,7 @@ namespace DronerOpgave
             List<string> latitudeData = new List<string>();
             for (int i = 17; i < strlist.Length; i++)
             {
-                // Console.WriteLine("lat data " + i + ":" + brokenLatData);
+             
 
                 strlist[i] = strlist[i].Replace(".", "");
                 strlist[i] = strlist[i].Insert(2, ".");
@@ -49,10 +49,10 @@ namespace DronerOpgave
 
             for (int i = 0; i < 12; i++)
             {
-                File.AppendAllText("ShadowFlyvning2.csv", strlist[i] + ";");
+                File.AppendAllText("ShadowFlyvning1.csv", strlist[i] + ";");
             }
-            File.AppendAllText("Flyvning2.csv", "GPSKoord\n");
-
+            File.AppendAllText("ShadowFlyvning1.csv", "GPSKoord\n");
+                
             List<string> samledeData = new List<string>();
             for (int i = 0; i < latitudeData.Count; i++)
             {
@@ -65,15 +65,16 @@ namespace DronerOpgave
             {
                 if (j % 13 == 0)
                 {
-                    File.AppendAllText("ShadowFlyvning2.csv", strlist[i] + ";" + samledeData[k] + "\n");
+                    File.AppendAllText("ShadowFlyvning1.csv", strlist[i] + ";" + samledeData[k] + "\n");
                     k++;
                 }
                 else
                 {
-                    File.AppendAllText("ShadowFlyvning2.csv", strlist[i] + ";");
+                    File.AppendAllText("ShadowFlyvning1.csv", strlist[i] + ";");
                 }
                 j++;
             }
+            Console.WriteLine("I fixed the data in Flyvning1.csv" + "\n" + "It is now saved as ShadowFlyvning1.csv in your pc");
         }
     }
 }
